@@ -3,20 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 import { BsFillTelephonePlusFill } from 'react-icons/bs';
 import { useForm } from 'react-hook-form';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
-  const stateContacts = useSelector(getContacts);
+  const stateContacts = useSelector(selectContacts);
 
   const onSubmitForm = contactInfo => {
     const duplicateName = stateContacts.find(
       contact => contact.name === contactInfo.name
     );
-    duplicateName
-      ? alert(contactInfo.name + ' is already in your contacts')
-      : dispatch(addContact(contactInfo));
+    // duplicateName
+    //   ? alert(contactInfo.name + ' is already in your contacts')
+    //   : dispatch(addContact(contactInfo));
     reset({
       name: '',
       number: '',

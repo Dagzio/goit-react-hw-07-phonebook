@@ -4,10 +4,11 @@ import Section from 'components/Section/Section';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from 'components/Filter/Filter';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
+
 
 const App = () => {
-  const stateContacts = useSelector(getContacts);
+  const stateContacts = useSelector(selectContacts);
   return (
     <Container>
       <Section title="Phonebook">

@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ContactList, Button } from './Contacts.styled';
-import { getContacts, getFilterValue } from 'redux/selectors';
+import { selectContacts, selectFilterValue } from 'redux/selectors';
 import { deleteContact } from 'redux/contactsSlice';
 import { RiDeleteBack2Fill } from 'react-icons/ri';
 
 const Contacts = () => {
   const dispatch = useDispatch();
-  const stateContacts = useSelector(getContacts);
-  const stateFilterValue = useSelector(getFilterValue);
+  const stateContacts = useSelector(selectContacts);
+  const stateFilterValue = useSelector(selectFilterValue);
   const filteredContacts = stateContacts?.filter(contact =>
     contact.name.toLowerCase().includes(stateFilterValue.toLowerCase())
   );
@@ -21,7 +21,7 @@ const Contacts = () => {
               {contact.name} : {contact.number}
               <Button
                 type="button"
-                onClick={() => dispatch(deleteContact(contact.id))}
+                // onClick={() => dispatch(deleteContact(contact.id))}
               >
                 <RiDeleteBack2Fill color="darkblue" />
               </Button>
