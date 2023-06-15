@@ -8,9 +8,9 @@ const Filter = () => {
   const dispatch = useDispatch();
   const stateFilterValue = useSelector(selectFilterValue);
 
-  // const onUpdateFilterValue = ({ target: { value } }) => {
-  //   dispatch(onChangeFilter(value));
-  // };
+  const onUpdateFilterValue = ({ target: { value } }) => {
+    dispatch(onChangeFilter(value));
+  };
 
   return (
     <FilterLabel>
@@ -23,7 +23,7 @@ const Filter = () => {
       <Input
         type="text"
         name="name"
-        // onChange={onUpdateFilterValue}
+        onChange={onUpdateFilterValue}
         value={stateFilterValue}
         placeholder="Type contact name. . ."
       />

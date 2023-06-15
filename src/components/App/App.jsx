@@ -3,12 +3,19 @@ import Container from './App.styled';
 import Section from 'components/Section/Section';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from 'components/Filter/Filter';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
-
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/operations';
 
 const App = () => {
   const stateContacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <Container>
       <Section title="Phonebook">
