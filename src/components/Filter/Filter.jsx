@@ -1,15 +1,17 @@
-import { onChangeFilter } from 'redux/contactsSlice';
 import { FilterLabel, Input } from './Filter.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilterValue } from 'redux/selectors';
 import { RiContactsFill } from 'react-icons/ri';
+import { createAction } from '@reduxjs/toolkit';
+
+export const onUpdateFilterValue = createAction('updateFilter');
 
 const Filter = () => {
   const dispatch = useDispatch();
   const stateFilterValue = useSelector(selectFilterValue);
 
-  const onUpdateFilterValue = ({ target: { value } }) => {
-    dispatch(onChangeFilter(value));
+  const onChangeFilterValue = ({ target: { value } }) => {
+    dispatch(onUpdateFilterValue(value));
   };
 
   return (
@@ -23,7 +25,7 @@ const Filter = () => {
       <Input
         type="text"
         name="name"
-        onChange={onUpdateFilterValue}
+        onChange={onChangeFilterValue}
         value={stateFilterValue}
         placeholder="Type contact name. . ."
       />

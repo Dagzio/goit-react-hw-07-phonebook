@@ -1,56 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { contactsInitialState } from './initialState';
 import { addContact, deleteContact, fetchContacts } from './operations';
+import { onUpdateFilterValue } from 'components/Filter/Filter';
+import {
+  fetchHandlePending,
+  fetchHandleFulfilled,
+  fetchHandleRejected,
+  contactHandleAdd,
+  contactHandleDelete,
+  filterHandleUpdate,
+} from './handleFunctions';
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: contactsInitialState,
-  extraReducers: {
-    [fetchContacts.pending](state) {
-      state.contacts.isLoading = true;
-    },
-    [fetchContacts.fulfilled](state, { payload }) {
-      state.contacts.isLoading = false;
-      state.contacts.error = null;
-      state.contacts.items = payload;
-    },
-    [fetchContacts.rejected](state, { payload }) {
-      state.contacts.isLoading = false;
-      state.contacts.error = payload;
-    },
-    [addContact.fulfilled](state, { payload }) {
-      state.contacts.items.push({
-        id: payload.id,
-        name: payload.name,
-        phone: payload.phone,
-      });
-    },
-    [deleteContact.fulfilled](state, { payload }) {
-      const filterValueId = state.contacts.items.findIndex(
-        contact => contact.id === payload.id
-      );
-      state.contacts.items.splice(filterValueId, 1);
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.pending, fetchHandlePending)
+      .addCase(fetchContacts.fulfilled, fetchHandleFulfilled)
+      .addCase(fetchContacts.rejected, fetchHandleRejected)
+      .addCase(addContact.fulfilled, contactHandleAdd)
+      .addCase(deleteContact.fulfilled, contactHandleDelete)
+      .addCase(onUpdateFilterValue, filterHandleUpdate);
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
-
-// reducers: {
-//   addContact(state, { payload }) {
-//     state.contacts.items.push({
-//       id: nanoid(),
-//       name: payload.name,
-//       number: payload.number,
-//     });
-//   },
-//   deleteContact(state, { payload }) {
-//     const filterValueId = state.contacts.items.findIndex(
-//       contact => contact.id === payload
-//     );
-//     state.contacts.items.splice(filterValueId, 1);
-//   },
-//   onChangeFilter(state, { payload }) {
-//     state.filter = payload;
-//   },
-// },

@@ -14,21 +14,25 @@ const Contacts = () => {
 
   return (
     <div>
-      <ContactList>
-        {filteredContacts.map(contact => {
-          return (
-            <li key={contact.id}>
-              {contact.name} : {contact.phone}
-              <Button
-                type="button"
-                onClick={() => dispatch(deleteContact(contact))}
-              >
-                <RiDeleteBack2Fill color="darkblue" />
-              </Button>
-            </li>
-          );
-        })}
-      </ContactList>
+      {stateContacts.length > 0 ? (
+        <ContactList>
+          {filteredContacts.map(contact => {
+            return (
+              <li key={contact.id}>
+                {contact.name} : {contact.phone}
+                <Button
+                  type="button"
+                  onClick={() => dispatch(deleteContact(contact))}
+                >
+                  <RiDeleteBack2Fill color="darkblue" />
+                </Button>
+              </li>
+            );
+          })}
+        </ContactList>
+      ) : (
+        <strong>There are no contacts in your phonebook yet.</strong>
+      )}
     </div>
   );
 };

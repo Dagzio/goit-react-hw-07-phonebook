@@ -4,12 +4,13 @@ import Section from 'components/Section/Section';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from 'components/Filter/Filter';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from 'redux/selectors';
+import { selectIsLoading } from 'redux/selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from 'redux/operations';
+import { ThreeDots } from 'react-loader-spinner';
 
 const App = () => {
-  const stateContacts = useSelector(selectContacts);
+  const stateIsLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,13 +22,22 @@ const App = () => {
       <Section title="Phonebook">
         <ContactForm />
       </Section>
-      {stateContacts.length > 0 ? (
+      {stateIsLoading ? (
+        <ThreeDots
+          height="70"
+          width="70"
+          radius="9"
+          color="#4fa94d"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          wrapperClassName=""
+          visible={true}
+        />
+      ) : (
         <Section title="Contacts">
           <Filter />
           <Contacts />
         </Section>
-      ) : (
-        <strong>There are no contacts in your phonebook yet.</strong>
       )}
     </Container>
   );
